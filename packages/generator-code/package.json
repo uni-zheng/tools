@@ -1,0 +1,21 @@
+{
+  "name": "@uniz/generator-code",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "create-subgenerator": "read -p \"input sub-generator name: \" name; yo generator:subgenerator $name",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "uni-zheng",
+  "license": "ISC",
+  "files": [
+    "generators"
+  ],
+  "keywords": [
+    "yeoman-generator"
+  ],
+  "dependencies": {
+    "yeoman-generator": "^4.11.0"
+  }
+}
