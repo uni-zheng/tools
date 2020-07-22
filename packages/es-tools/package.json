@@ -1,6 +1,6 @@
 {
   "name": "@uniz/es-tools",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "",
   "scripts": {
     "test": "jest --watch",
