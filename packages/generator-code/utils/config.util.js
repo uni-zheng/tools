@@ -1,4 +1,4 @@
-import { ConfigConstructor } from './config/Config.constructor';
+const ConfigConstructor = require('./config/Config.constructor');
 
 const configUtil = {
   create(generatorInstance, configMap) {
@@ -6,4 +6,4 @@ const configUtil = {
   },
 };
 
-export { configUtil };
+module.exports = configUtil;
