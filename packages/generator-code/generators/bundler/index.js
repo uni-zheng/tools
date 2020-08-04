@@ -1,9 +1,132 @@
 'use strict';
+const configUtil = require('../../utils/config.util');
 const Generator = require('yeoman-generator');
-const _ = require('lodash');
 
 module.exports = class extends Generator {
   initializing() {
+    this.configInstance = configUtil.create(this, {
+      webpack: {
+        option: {
+          default: true,
+          name: 'webpack',
+          value: 'webpack',
+        },
+        installDev: [
+          'webpack',
+        ],
+        packageJson: {
+          scripts: {
+            'test': 'test test',
+          },
+        },
+      },
+      gulp: {
+        option: {
+          default: false,
+          name: 'gulp',
+          value: 'gulp',
+        },
+        installDev: [
+          'babel-loader',
+        ],
+      },
+      gulpForSass: {
+        option: {
+          default: false,
+          name: 'gulp for sass',
+          value: 'gulpForSass',
+        },
+        template: [{
+          from: 'gulpForSass/gulpfile.js',
+          to: 'gulpfile.js',
+        }],
+        installDev: [
+          'lodash',
+          'gulp',
+          'gulp-json-editor',
+          'sass',
+          'gulp-rename',
+          'del',
+        ],
+        packageJson: {
+          scripts: {
+            'start:prod': 'gulp --env.build=prod',
+            'build:prod': 'gulp build --env.build=prod',
+          },
+        },
+      },
+      gulpWithWebpack: {
+        option: {
+          default: false,
+          name: 'gulp + webpack',
+          value: 'gulpWithWebpack',
+        },
+        template: [{
+          from: 'gulpWithWebpack/gulpfile.js',
+          to: 'gulpfile.js',
+        }, {
+          from: 'gulpWithWebpack/webpack.config.js',
+          to: 'webpack.config.js',
+        }],
+        install: [
+          'lodash'
+        ],
+        installDev: [
+          'gulp',
+          'gulp-json-editor',
+          'vinyl-named',
+          'minimist',
+          'webpack',
+          'webpack-manifest-plugin',
+          'webpack-stream',
+          'babel-loader',
+          'css-loader',
+          'postcss-loader',
+          'autoprefixer',
+          'sass',
+          'sass-loader',
+          'file-loader',
+          'mini-css-extract-plugin',
+        ],
+        packageJson: {
+          scripts: {
+            'start:prod': 'gulp --env.build=prod',
+            'build:prod': 'gulp build --env.build=prod',
+          },
+        },
+      },
+      gulpWithRollup: {
+        option: {
+          default: false,
+          name: 'gulp + rollup',
+          value: 'gulpWithRollup',
+        },
+        template: [{
+          from: 'gulpWithRollup/gulpfile.js',
+          to: 'gulpfile.js',
+        }],
+        install: [
+          'lodash'
+        ],
+        installDev: [
+          'lodash',
+          'gulp',
+          'gulp-json-editor',
+          'vinyl-named',
+          'rollup',
+          '@rollup/plugin-babel',
+          '@rollup/plugin-node-resolve',
+          '@rollup/plugin-commonjs',
+        ],
+        packageJson: {
+          scripts: {
+            'start:prod': 'gulp --env.build=prod',
+            'build:prod': 'gulp build --env.build=prod',
+          },
+        },
+      },
+    });
+
     this.configMap = {
       webpack: {
         defaultOption: true,
@@ -66,65 +189,24 @@ module.exports = class extends Generator {
   }
 
   prompting() {
-    const promptConfigList = [
-      {
+    return (
+      this.configInstance.prompt({
         type: 'list',
         name: 'selectedMethod',
         message: '请选择打包方式',
-        choices: [{
-          name: 'webpack',
-          value: 'webpack',
-        }, {
-          name: 'gulp',
-          value: 'gulp',
-        }, {
-          name: 'gulp + webpack',
-          value: 'gulpWithWebpack',
-        }, {
-          name: 'gulp + rollup',
-          value: 'gulpWithRollup',
-        }],
-        default: (
-          Object.keys(this.configMap)
-          .findIndex(configName => this.configMap[configName].defaultOption)
-        ),
-      },
-    ];
-
-    return (
-      this.prompt(promptConfigList)
-      .then(answers => {
-        this.answers = answers;
-
-        this.selectedConfig = this.configMap[this.answers.selectedMethod];
       })
     );
   }
 
   configuring() {
-    const packageConfig = this.fs.readJSON(
-      this.destinationPath('package.json'),
-    );
-
-    this.fs.writeJSON(
-      this.destinationPath('package.json'),
-      _.merge(packageConfig, this.selectedConfig.packageJson),
-    );
+    this.configInstance.modifyPackageJson();
   }
 
   writing() {
-    this.fs.copyTpl(
-      this.templatePath('gulpWithRollup/gulpfile.template.js'),
-      this.destinationPath('gulpfile.js'),
-    );
+    this.configInstance.writeTemplate();
   }
 
   install() {
-    this.yarnInstall(
-      this.selectedConfig.install,
-      {
-        dev: true,
-      },
-    );
+    this.configInstance.runYarn();
   }
 };

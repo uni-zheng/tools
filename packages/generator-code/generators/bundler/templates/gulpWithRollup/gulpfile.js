@@ -5,6 +5,11 @@ const jeditor = require('gulp-json-editor');
 const babel = require('@rollup/plugin-babel');
 const { nodeResolve } = require('@rollup/plugin-node-resolve');
 const commonjs = require('@rollup/plugin-commonjs');
+const del = require('del');
+
+function clean() {
+  return del(['dist']);
+}
 
 function copyPublic() {
   return (
@@ -52,7 +57,7 @@ function makePackageJson() {
   );
 }
 
-const tasks = series(copyPublic, build, makePackageJson);
+const tasks = series(clean, copyPublic, build, makePackageJson);
 
 exports.build = tasks;
 exports.default = function () {
