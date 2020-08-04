@@ -1,11 +1,13 @@
 const _ = require('lodash');
 const rollup = require('rollup');
 const { series, src, dest, watch } = require('gulp');
-const minimist = require('minimist');
 const jeditor = require('gulp-json-editor');
 const babel = require('rollup-plugin-babel');
+const del = require('del');
 
-const argv = minimist(process.argv.slice(2));
+function clean() {
+  return del(['dist']);
+}
 
 function copyPublic() {
   return (
@@ -49,7 +51,7 @@ function makePackageJson() {
   );
 }
 
-const tasks = series(copyPublic, build, makePackageJson);
+const tasks = series(clean, copyPublic, build, makePackageJson);
 
 exports.build = tasks;
 exports.default = function () {
@@ -59,6 +61,5 @@ exports.default = function () {
     'public/**/*',
     'es/**/*',
     'gulpfile.js',
-    'webpack.config.js',
   ], tasks);
 };

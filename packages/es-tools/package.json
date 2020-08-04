@@ -20,16 +20,13 @@
     "@babel/plugin-proposal-object-rest-spread": "^7.10.4",
     "@babel/plugin-proposal-optional-chaining": "^7.10.4",
     "@babel/preset-env": "^7.10.4",
-    "autoprefixer": "^9.8.5",
     "babel-jest": "^25.5.1",
+    "del": "^5.1.0",
     "gulp": "^4.0.2",
     "gulp-json-editor": "^2.5.4",
     "jest": "^25.5.2",
-    "jquery": "^3.4.1",
     "lodash": "^4.17.15",
-    "minimist": "^1.2.5",
     "rollup": "^2.22.1",
-    "rollup-plugin-babel": "^4.4.0",
-    "vinyl-named": "^1.1.0"
+    "rollup-plugin-babel": "^4.4.0"
   }
 }
