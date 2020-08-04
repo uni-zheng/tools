@@ -4,11 +4,15 @@
   "description": "",
   "scripts": {
     "test": "jest --watch",
+    "prepublish": "npm run build:prod",
     "build:prod": "gulp build --env.build=prod",
     "start:prod": "gulp --env.build=prod"
   },
   "author": "",
   "license": "ISC",
+  "publishConfig": {
+    "directory": "dist"
+  },
   "peerDependencies": {
     "lodash": "^4.0.0"
   },
