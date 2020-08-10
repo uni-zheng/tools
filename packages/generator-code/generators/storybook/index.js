@@ -1,56 +1,66 @@
 'use strict';
 const Generator = require('yeoman-generator');
 const _ = require('lodash');
+const configUtil = require('../../utils/config.util');
 
 module.exports = class extends Generator {
   initializing() {
-    this.config = {
-      defaultOption: false,
-      install: [
-        'react',
-        'react-dom'
-      ],
-      installDev: [
-        '@storybook/react',
-        'babel-loader',
-        '@babel/core',
-      ],
-      packageJson: {
-        scripts: {
-          'storybook': 'start-storybook',
+    this.configInstance = configUtil.create(this, {
+      base: {
+        option: {
+          default: true,
+          name: 'base',
+          value: 'base',
+        },
+        template: [{
+          from: 'main.template.js',
+          to: '.storybook/main.js',
+        }, {
+          from: 'preview.template.js',
+          to: '.storybook/preview.js',
+        }],
+        install: [
+          'react',
+          'react-dom',
+        ],
+        installDev: [
+          '@storybook/addon-docs',
+          '@storybook/addon-knobs',
+          '@storybook/addon-a11y',
+          '@storybook/addon-viewport',
+          '@storybook/addon-backgrounds',
+          '@storybook/addon-storysource',
+          '@storybook/react',
+          '@babel/core',
+          'babel-loader',
+          'css-loader',
+          'react-is',
+          'sass',
+          'sass-loader',
+          'style-loader',
+        ],
+        packageJson: {
+          scripts: {
+            'start:storybook': 'start-storybook',
+          },
         },
       },
-    };
+    });
+  }
+
+  prompting() {
+    this.configInstance.setPromptAnswer('base');
   }
 
   configuring() {
-    const packageConfig = this.fs.readJSON(
-      this.destinationPath('package.json'),
-    );
-
-    this.fs.writeJSON(
-      this.destinationPath('package.json'),
-      _.merge(packageConfig, this.config.packageJson),
-    );
+    this.configInstance.modifyPackageJson();
   }
 
   writing() {
-    this.fs.copyTpl(
-      this.templatePath('main.template.js'),
-      this.destinationPath('.storybook/main.js'),
-    );
+    this.configInstance.writeTemplate();
   }
 
   install() {
-    this.yarnInstall(
-      this.config.installDev,
-      {
-        dev: true,
-      },
-    );
-
-    this.yarnInstall(
-      this.config.install,
-    );
+    this.configInstance.runYarn();
   }
 };

@@ -57,6 +57,10 @@ class ConfigConstructor {
     }
   }
 
+  setPromptAnswer(answer) {
+    this.answer = answer;
+  }
+
   /**
    *
    * @param {object} basePromptConfig
