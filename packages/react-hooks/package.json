@@ -10,6 +10,7 @@
     "prepublish": "npm run build:prod"
   },
   "publishConfig": {
+    "access": "public",
     "directory": "dist"
   },
   "author": "",
@@ -40,5 +41,6 @@
     "react-test-renderer": "^16.13.1",
     "rollup": "^2.26.5",
     "vinyl-named": "^1.1.0"
-  }
+  },
+  "gitHead": "6bc84513bf94f5e706c09bb4120144b7aa7bb143"
 }
