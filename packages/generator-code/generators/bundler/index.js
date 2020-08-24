@@ -16,7 +16,8 @@ module.exports = class extends Generator {
         ],
         packageJson: {
           scripts: {
-            'test': 'test test',
+            'start:prod': 'gulp --env.build=prod',
+            'build:prod': 'gulp build --env.build=prod',
           },
         },
       },
@@ -68,10 +69,8 @@ module.exports = class extends Generator {
           from: 'gulpWithWebpack/webpack.config.js',
           to: 'webpack.config.js',
         }],
-        install: [
-          'lodash'
-        ],
         installDev: [
+          'lodash',
           'gulp',
           'gulp-json-editor',
           'vinyl-named',
@@ -87,6 +86,7 @@ module.exports = class extends Generator {
           'sass-loader',
           'file-loader',
           'mini-css-extract-plugin',
+          'del',
         ],
         packageJson: {
           scripts: {
@@ -105,9 +105,6 @@ module.exports = class extends Generator {
           from: 'gulpWithRollup/gulpfile.js',
           to: 'gulpfile.js',
         }],
-        install: [
-          'lodash'
-        ],
         installDev: [
           'lodash',
           'gulp',
@@ -117,6 +114,7 @@ module.exports = class extends Generator {
           '@rollup/plugin-babel',
           '@rollup/plugin-node-resolve',
           '@rollup/plugin-commonjs',
+          'del',
         ],
         packageJson: {
           scripts: {
@@ -126,66 +124,6 @@ module.exports = class extends Generator {
         },
       },
     });
-
-    this.configMap = {
-      webpack: {
-        defaultOption: true,
-        install: [
-          'webpack',
-        ],
-      },
-      gulp: {
-        defaultOption: false,
-        install: [
-          'babel-loader',
-        ],
-      },
-      gulpWithWebpack: {
-        defaultOption: false,
-        install: [
-          'gulp',
-          'gulp-json-editor',
-          'vinyl-named',
-          'minimist',
-          'webpack',
-          'webpack-manifest-plugin',
-          'webpack-stream',
-          'babel-loader',
-          'css-loader',
-          'postcss-loader',
-          'autoprefixer',
-          'sass',
-          'sass-loader',
-          'file-loader',
-          'mini-css-extract-plugin',
-        ],
-        packageJson: {
-          scripts: {
-            'start:prod': 'gulp --env.build=prod',
-            'build:prod': 'gulp build --env.build=prod',
-          },
-        },
-      },
-      gulpWithRollup: {
-        defaultOption: false,
-        install: [
-          'lodash',
-          'gulp',
-          'gulp-json-editor',
-          'vinyl-named',
-          'rollup',
-          '@rollup/plugin-babel',
-          '@rollup/plugin-node-resolve',
-          '@rollup/plugin-commonjs',
-        ],
-        packageJson: {
-          scripts: {
-            'start:prod': 'gulp --env.build=prod',
-            'build:prod': 'gulp build --env.build=prod',
-          },
-        },
-      },
-    };
   }
 
   prompting() {
