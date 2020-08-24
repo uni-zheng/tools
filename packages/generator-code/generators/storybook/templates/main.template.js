@@ -15,6 +15,17 @@ module.exports = {
   ],
 
   webpackFinal: async (config) => {
+    const targetRule = config.module.rules.filter(rule => {
+      return rule.use && rule.use[0] && rule.use[0].loader === 'babel-loader';
+    })[0];
+
+    if (targetRule) {
+      // 排除子项目中的 node_mudules 目录
+      targetRule.exclude.push(
+        path.resolve(__dirname, '../packages/TODO/node_modules'),
+      );
+    }
+
     config.module.rules.push({
       test: /\.scss$/,
       use: [
