@@ -23,6 +23,8 @@ async function build() {
     input: './es/index.js',
     external: [
       'lodash',
+      'fs',
+      'path',
     ],
     plugins: [
       babel({
@@ -40,6 +42,8 @@ async function build() {
     exports: 'named',
     globals: {
       lodash: '_',
+      fs: 'fs',
+      path: 'path',
     },
   });
 }
