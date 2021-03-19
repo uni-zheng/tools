@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`fileUtil getDependentGraph works 1`] = `
+Graph {
+  "adjList": Map {
+    "./root.js" => Array [
+      "./b.js",
+      "./c.js",
+    ],
+    "./b.js" => Array [
+      "./folder1/e.js",
+    ],
+    "./folder1/e.js" => Array [],
+    "./c.js" => Array [
+      "./folder1/d.js",
+    ],
+    "./folder1/d.js" => Array [
+      "./folder1/e.js",
+    ],
+  },
+  "isDirected": true,
+  "vertices": Array [
+    "./root.js",
+    "./b.js",
+    "./folder1/e.js",
+    "./c.js",
+    "./folder1/d.js",
+  ],
+}
+`;
