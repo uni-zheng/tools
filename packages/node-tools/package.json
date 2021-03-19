@@ -4,6 +4,7 @@
   "description": "",
   "scripts": {
     "test": "jest",
+    "prepublish": "npm run build:prod",
     "start:prod": "gulp --env.build=prod",
     "build:prod": "gulp build --env.build=prod"
   },
