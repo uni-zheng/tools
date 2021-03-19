@@ -2,7 +2,8 @@
   "name": "root",
   "private": true,
   "scripts": {
-    "bump-version": "lerna version --conventional-commits --no-commit-hooks"
+    "bump-version": "lerna version --conventional-commits --no-commit-hooks",
+    "publish:all": "lerna publish --conventional-commits --no-commit-hooks"
   },
   "devDependencies": {
     "lerna": "^3.16.4"
