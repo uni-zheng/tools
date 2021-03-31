@@ -59,7 +59,7 @@ function makePackageJson() {
   );
 }
 
-const tasks = series(clean, copyPublic, build);
+const tasks = series(clean, copyPublic, build, makePackageJson);
 
 exports.build = tasks;
 exports.default = function () {
