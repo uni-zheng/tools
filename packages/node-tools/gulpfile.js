@@ -2,6 +2,7 @@ const _ = require('lodash');
 const rollup = require('rollup');
 const { series, src, dest, watch } = require('gulp');
 const jeditor = require('gulp-json-editor');
+const json = require('@rollup/plugin-json');
 const babel = require('@rollup/plugin-babel').default;
 const { nodeResolve } = require('@rollup/plugin-node-resolve');
 const commonjs = require('@rollup/plugin-commonjs');
@@ -23,8 +24,6 @@ async function build() {
     input: './es/index.js',
     external: [
       'lodash',
-      'fs',
-      'path',
     ],
     plugins: [
       babel({
@@ -32,6 +31,7 @@ async function build() {
       }),
       nodeResolve(),
       commonjs(),
+      json(),
     ],
   });
 
@@ -42,8 +42,6 @@ async function build() {
     exports: 'named',
     globals: {
       lodash: '_',
-      fs: 'fs',
-      path: 'path',
     },
   });
 }
@@ -61,7 +59,7 @@ function makePackageJson() {
   );
 }
 
-const tasks = series(clean, copyPublic, build, makePackageJson);
+const tasks = series(clean, copyPublic, build);
 
 exports.build = tasks;
 exports.default = function () {
