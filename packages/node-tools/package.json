@@ -4,7 +4,7 @@
   "description": "",
   "scripts": {
     "test": "jest",
-    "prepublish": "npm run build:prod",
+    "prepublish": "yarn run build:prod",
     "start:prod": "gulp --env.build=prod",
     "build:prod": "gulp build --env.build=prod"
   },
@@ -36,5 +36,6 @@
   },
   "dependencies": {
     "@uniz/es-tools": "^0.2.0"
-  }
+  },
+  "gitHead": "79c0b93594094ce8bb916026548e9b0296749637"
 }
