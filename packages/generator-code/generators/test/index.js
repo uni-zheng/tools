@@ -31,6 +31,15 @@ module.exports = class extends Generator {
           'react-test-renderer',
         ],
       },
+      Typescript: {
+        option: {
+          name: 'typescript test',
+          value: 'typescript',
+        },
+        installDev: [
+          '@babel/preset-typescript',
+        ],
+      },
     });
   }
 

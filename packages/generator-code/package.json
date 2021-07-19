@@ -17,6 +17,7 @@
     "yeoman-generator"
   ],
   "dependencies": {
+    "inquirer-file-tree-selection-prompt": "^1.0.12",
     "lodash": "^4.17.15",
     "yeoman-generator": "^4.11.0"
   }
